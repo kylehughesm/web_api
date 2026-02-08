@@ -6,8 +6,8 @@ class TrackRepository(ABC):
     @abstractmethod 
     def get_all(self): pass
 
-    @abstractmethod
-    def get_by_genre(self, genre): pass
+#    @abstractmethod
+ #   def get_by_genre(self, genre): pass
 
 class GenreRepository(ABC):
     def __init__(self): pass

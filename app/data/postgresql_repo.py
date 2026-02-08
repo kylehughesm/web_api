@@ -1,10 +1,34 @@
 from app.data.repository import TrackRepository
+from sqlalchemy import text
+from app.data.database import init_engine
 
 class PostgresqlTrackRepository(TrackRepository):
+    def __init__(self):
+        self.engine = init_engine()
 
     def get_all(self):
-
-        return
-
-    def get_by_genre(self, genre):
-        return 
+        with self.engine.connect() as conn:
+            query = text("""
+             select track.name as song, album.title as album, track.composer as artist, genre.name as genre from track
+inner join genre on track.genre_id=genre.genre_id 
+inner join album on track.album_id=album.album_id;            
+                         """)
+            result = conn.execute(query).mappings().all()
+            return [dict(row) for row in result]
+  #  def get_by_genre(self, genre):
+   #     return 
+"""
+    def update_status(self, user_id, status):
+        # engine.begin() handles the COMMIT automatically for writes
+        with self.engine.begin() as conn:
+            conn.execute(
+                text("UPDATE users SET status = :status WHERE id = :id"),
+                {"status": status, "id": user_id}
+            )    def update_status(self, user_id, status):
+        # engine.begin() handles the COMMIT automatically for writes
+        with self.engine.begin() as conn:
+            conn.execute(
+                text("UPDATE users SET status = :status WHERE id = :id"),
+                {"status": status, "id": user_id}
+            )
+"""
