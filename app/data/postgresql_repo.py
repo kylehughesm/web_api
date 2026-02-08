@@ -6,7 +6,7 @@ class PostgresqlTrackRepository(TrackRepository):
     def __init__(self):
         self.engine = init_engine()
 
-    def get_all(self):
+    def get_tracks(self):
         with self.engine.connect() as conn:
             query = text("""
              select track.name as song, album.title as album, track.composer as artist, genre.name as genre from track
@@ -15,8 +15,6 @@ inner join album on track.album_id=album.album_id;
                          """)
             result = conn.execute(query).mappings().all()
             return [dict(row) for row in result]
-  #  def get_by_genre(self, genre):
-   #     return 
 """
     def update_status(self, user_id, status):
         # engine.begin() handles the COMMIT automatically for writes

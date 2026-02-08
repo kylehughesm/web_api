@@ -4,10 +4,7 @@ class TrackRepository(ABC):
     def __init__(self): pass
 
     @abstractmethod 
-    def get_all(self): pass
-
-#    @abstractmethod
- #   def get_by_genre(self, genre): pass
+    def get_tracks(self): pass
 
 class GenreRepository(ABC):
     def __init__(self): pass
